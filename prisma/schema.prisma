@@ -1,0 +1,36 @@
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name  String
+  createdAt DateTime @default(now())
+
+  items Item[]
+
+  tags Tag[]
+}
+
+model Item {
+  id        Int      @id @default(autoincrement())
+  name      String
+  isAvailable Boolean  @default(true)
+  isOnGroceryList Boolean  @default(false)
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, name])
+
+  tags Tag[]
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, name])
+
+  items Item[]
+}
