@@ -13,8 +13,8 @@ model User {
   createdAt DateTime @default(now())
 
   items Item[]
-
   tags Tag[]
+  categories Category[]
 }
 
 model Item {
@@ -27,11 +27,24 @@ model Item {
   createdAt       DateTime @default(now())
 
   tags Tag[]
+  categories Category[]
 
   @@unique([userId, name])
 }
 
 model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  items Item[]
+
+  @@unique([userId, name])
+}
+
+model Category {
   id        Int      @id @default(autoincrement())
   name      String
   userId    Int
