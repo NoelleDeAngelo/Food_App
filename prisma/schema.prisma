@@ -1,7 +1,15 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
 
 model User {
   id        Int      @id @default(autoincrement())
-  name  String
+  name      String
   createdAt DateTime @default(now())
 
   items Item[]
@@ -10,17 +18,17 @@ model User {
 }
 
 model Item {
-  id        Int      @id @default(autoincrement())
-  name      String
-  isAvailable Boolean  @default(true)
+  id              Int      @id @default(autoincrement())
+  name            String
+  isAvailable     Boolean  @default(true)
   isOnGroceryList Boolean  @default(false)
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-
-  @@unique([userId, name])
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
 
   tags Tag[]
+
+  @@unique([userId, name])
 }
 
 model Tag {
@@ -30,7 +38,7 @@ model Tag {
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 
-  @@unique([userId, name])
-
   items Item[]
+
+  @@unique([userId, name])
 }
