@@ -1,0 +1,25 @@
+.categoryChip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 14px;
+
+  background-color: var(--oat);
+  color: var(--ink);
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.categoryChip:hover {
+  background-color: var(--sage-dark);
+  color: white;
+}
+

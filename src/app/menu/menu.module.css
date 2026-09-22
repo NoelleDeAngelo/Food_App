@@ -1,13 +1,20 @@
 .page {
   display: flex;
   flex-direction: column;
-  margin: 10% 5%;
+  margin: var(--page-padding);
   min-height: 100dvh;
   text-align: left;
 }
 
 .subheading {
   margin-bottom: 16px;
-  font-size: 1.25rem;
+  font-size: .85rem;
   font-weight: 600;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
 }

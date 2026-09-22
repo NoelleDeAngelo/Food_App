@@ -1,13 +1,12 @@
 .foodCard {
   width: 100%;
-  padding: 16px 0;
-
+  padding: 16px 10px;
   border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-very-soft);
 }
 
 .name {
   margin-bottom: 8px;
-
   font-size: 1.1rem;
   font-weight: 600;
 }
