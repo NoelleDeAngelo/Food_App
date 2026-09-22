@@ -1,0 +1,19 @@
+.foodCard {
+  width: 100%;
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.name {
+  margin-bottom: 8px;
+
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
