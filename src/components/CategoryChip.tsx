@@ -1,7 +1,7 @@
-import { Category } from "../../generated/prisma/client"
+import type { CategorySummary } from "@/types";
 import styles from "./CategoryChip.module.css";
 
-export default function CategoryChip({ category }: { category: Category }) {
+export default function CategoryChip({ category }: { category: CategorySummary }) {
   return (
     <div className={styles.categoryChip}>
       <span>{category.name}</span>

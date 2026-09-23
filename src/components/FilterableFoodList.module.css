@@ -1,0 +1,10 @@
+.filterableFoodList {
+  color: var(--ink);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}

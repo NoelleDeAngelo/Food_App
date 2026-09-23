@@ -1,10 +1,10 @@
-import type { Tag } from "../../generated/prisma/client";
+import{TagSummary}from"@/types";
 import TagPill from "./TagPill";
 import styles from "./FoodCard.module.css";
 
 type FoodCardProps = {
   name: string;
-  tags: Pick<Tag, "id" | "name">[];
+  tags: TagSummary[];
 };
 
 export default function FoodCard({ name, tags }: FoodCardProps) {
