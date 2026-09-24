@@ -1,9 +1,6 @@
 import styles from "./TagPill.module.css";
+import type { TagSummary } from "@/types";
 
-type TagPillProps = {
-  name: string;
-};
-
-export default function TagPill({ name }: TagPillProps) {
-  return <span className={styles.tagPill}>{name}</span>;
+export default function TagPill({ tag }: { tag: TagSummary }) {
+  return <span className={styles.tagPill}>{tag.name}</span>;
 }

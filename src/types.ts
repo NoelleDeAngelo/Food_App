@@ -1,4 +1,4 @@
-import type { Prisma, Item, Tag, Category } from "~/generated/prisma/client";
+import type { Item, Tag, Category } from "~/generated/prisma/client";
 
 export type TagSummary = Pick<Tag, "id" | "name">;
 

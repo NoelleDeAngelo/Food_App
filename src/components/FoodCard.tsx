@@ -13,7 +13,7 @@ export default function FoodCard({ name, tags }: FoodCardProps) {
       <h2 className={styles.name}>{name}</h2>
       <div className={styles.tags}>
         {tags.map((tag) => (
-          <TagPill key={tag.id} name={tag.name} />
+          <TagPill key={tag.id} tag={tag} />
         ))}
       </div>
     </div>
