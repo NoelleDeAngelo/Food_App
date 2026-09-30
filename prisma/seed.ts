@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import prisma from "@/lib/db/prisma";
 
 async function main() {
   // create user
@@ -35,6 +35,14 @@ async function main() {
       userId: user.id,
     }
   });
+    const sweetTag = await prisma.tag.create({
+      data: {
+        name: "sweet",
+        userId: user.id,
+      },
+    });
+
+
 // create categories
   const breakfast = await prisma.category.create({
     data:
@@ -63,6 +71,14 @@ async function main() {
         userId: user.id,
       },
     });
+    const dessert = await prisma.category.create({
+        data: {
+          name: "Dessert",
+          userId: user.id,
+        },
+      });
+
+
 
 // create items
   await prisma.item.create({
@@ -115,17 +131,109 @@ async function main() {
   await prisma.item.create({
     data:{
         name: "Pasta",
-        isAvailable: false,
+        isAvailable: true,
         isOnGroceryList: false,
         userId: user.id,
         tags: {
-          connect: [{ id: warmTag.id }],
+          connect: [{ id: warmTag.id }, { id: requiresCookingTag.id }],
         },
         categories: {
           connect: [{ id: dinner.id }, { id: lunch.id }],
         },
       },
   });
+
+  await prisma.item.create({
+      data: {
+        name: "Pancakes",
+        isAvailable: true,
+        isOnGroceryList: false,
+        userId: user.id,
+        tags: {
+          connect: [{ id: warmTag.id }, { id: sweetTag.id }, { id: requiresCookingTag.id }],
+        },
+        categories: {
+          connect: [{ id: breakfast.id }],
+        },
+      },
+    });
+
+  await prisma.item.create({
+      data: {
+        name: "Apple",
+        isAvailable: true,
+        isOnGroceryList: false,
+        userId: user.id,
+        tags: {
+          connect: [{ id: easyTag.id }, { id: sweetTag.id }],
+        },
+        categories: {
+          connect: [{ id: snack.id }],
+        },
+      },
+    });
+
+  await prisma.item.create({
+        data: {
+          name: "Ice cream",
+          isAvailable: true,
+          isOnGroceryList: false,
+          userId: user.id,
+          tags: {
+            connect: [{ id: easyTag.id }, { id: sweetTag.id }, { id: coldTag.id }],
+          },
+          categories: {
+            connect: [{ id: dessert.id }],
+          },
+        },
+  });
+
+  await prisma.item.create({
+      data: {
+        name: "Cookies",
+        isAvailable: true,
+        isOnGroceryList: false,
+        userId: user.id,
+        tags: {
+          connect: [{ id: requiresCookingTag.id }, { id: sweetTag.id }],
+        },
+        categories: {
+          connect: [{ id: dessert.id }],
+        },
+      },
+  });
+
+  await prisma.item.create({
+      data: {
+        name: "Salad",
+        isAvailable: true,
+        isOnGroceryList: false,
+        userId: user.id,
+        tags: {
+          connect: [{ id: easyTag.id }, { id: coldTag.id }],
+        },
+        categories: {
+          connect: [{ id: lunch.id }],
+        },
+      },
+  });
+
+  await prisma.item.create({
+      data: {
+        name: "Quesadilla",
+        isAvailable: true,
+        isOnGroceryList: false,
+        userId: user.id,
+        tags: {
+          connect: [{ id: easyTag.id }, { id: requiresCookingTag.id }, { id: warmTag.id }],
+        },
+        categories: {
+          connect: [{ id: snack.id }, { id: lunch.id }, { id: dinner.id }],
+        },
+      },
+    });
+
+
 }
 
 main()
