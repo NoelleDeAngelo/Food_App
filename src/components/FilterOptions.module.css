@@ -1,13 +1,78 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: flex-end;
+
+  background-color: rgb(0 0 0 / 0.2);
+
+  z-index: 100;
+}
+
+.sheet {
+  width: 100%;
+  min-height: 65dvh;
+  max-height: 85dvh;
+
+  padding: 12px 20px 32px;
+
+  background-color: var(--background);
+
+  border-radius: 24px 24px 0 0;
+
+  overflow-y: auto;
+
+  animation: slideUp 250ms ease-out;
+
+}
+
+.dragArea {
+  display: flex;
+  justify-content: center;
+
+  padding: 8px 0 16px;
+
+  cursor: grab;
+  touch-action: none;
+}
+
+.dragArea:active {
+  cursor: grabbing;
+}
+
+.handle {
+  width: 40px;
+  height: 4px;
+
+  background-color: var(--border);
+  border-radius: var(--radius-pill);
+}
+
+.title {
+  margin: 0 0 16px;
+
+  font-size: 1.5rem;
+}
+
+.clearAll {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-size: 0.875rem;
+  color: var(--primary);
+  cursor: pointer;
+}
+
 .filterOptions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-
-  width: 100%;
-  margin-top: 8px;
 }
 
 .filterButton {
+  min-height: 40px;
   padding: 8px 14px;
 
   background-color: var(--surface);
@@ -22,9 +87,37 @@
   cursor: pointer;
 }
 
-
-
 .selected {
-  background-color: var(--sage-dark);
+  background-color: var(--sage-light);
+  border-color: var(--sage);
+  color: var(--sage-dark);
+}
+
+.closeButton {
+  width: 100%;
+  min-height: 52px;
+
+  margin-top: 32px;
+  padding: 12px 20px;
+
+  background-color: var(--sage);
   color: white;
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }

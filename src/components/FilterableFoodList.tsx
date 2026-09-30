@@ -55,6 +55,10 @@ export default function FilterableFoodList({
     });
   };
 
+  const clearAllTags = () => {
+    setSelectedTags([]);
+  };
+
 
 
   const handleCategoryClick = (category: CategorySummary| null) => {
@@ -87,7 +91,14 @@ export default function FilterableFoodList({
       </div>
       <FilterButton onClick={toggleFilterOptionsShowing} />
       {filterOptionsShowing && (
-        <FilterOptions tags={tags} selectedTags={selectedTags} onClick={toggleTag} />
+        <FilterOptions
+          tags={tags}
+          selectedTags={selectedTags}
+          optionsNumber={filteredItems.length}
+          onClick={toggleTag}
+          onClose={toggleFilterOptionsShowing}
+          onClearAll={clearAllTags}
+        />
       )}
 
       {filteredItems.map((item) => (
