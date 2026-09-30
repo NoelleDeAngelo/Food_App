@@ -6,7 +6,8 @@ import FoodCard from "./FoodCard";
 import styles from "./FilterableFoodList.module.css";
 import { useState } from "react";
 import FilterOptions from "./FilterOptions";
-import FilterButton from "./FilterButton";
+import { LiaSlidersHSolid } from "react-icons/lia";
+
 
 
 export default function FilterableFoodList({
@@ -89,7 +90,9 @@ export default function FilterableFoodList({
           />
         ))}
       </div>
-      <FilterButton onClick={toggleFilterOptionsShowing} />
+      <button className={styles.filterButton} onClick={toggleFilterOptionsShowing}>
+        <LiaSlidersHSolid /> Filter
+      </button>
       {filterOptionsShowing && (
         <FilterOptions
           tags={tags}
