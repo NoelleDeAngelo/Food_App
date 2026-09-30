@@ -1,25 +1,30 @@
-.categoryChip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.filterOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 
+  width: 100%;
+  margin-top: 8px;
+}
+
+.filterButton {
   padding: 8px 14px;
 
-  background-color: var(--oat);
+  background-color: var(--surface);
   color: var(--ink);
 
-  border: 1px solid transparent;
+  border: 1px solid var(--border);
   border-radius: var(--radius-pill);
 
   font-size: 0.875rem;
   font-weight: 500;
 
-  white-space: nowrap;
   cursor: pointer;
 }
+
+
 
 .selected {
   background-color: var(--sage-dark);
   color: white;
 }
-

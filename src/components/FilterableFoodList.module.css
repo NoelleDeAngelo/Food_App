@@ -29,7 +29,7 @@
   cursor: pointer;
 }
 
-.chip:hover {
+.selected {
   background-color: var(--sage-dark);
   color: white;
 }

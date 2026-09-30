@@ -8,7 +8,6 @@ import { useState } from "react";
 import FilterOptions from "./FilterOptions";
 import FilterButton from "./FilterButton";
 
-// Todo: update style so selected category and tags are visually indicated
 
 export default function FilterableFoodList({
   categories,
@@ -71,13 +70,25 @@ export default function FilterableFoodList({
   return (
     <div className={styles.filterableFoodList}>
       <div className={styles.categories}>
-        <div className={styles.chip} onClick={() => handleCategoryClick(null)}><span>All</span></div>
+        <div
+          className={`${styles.chip} ${!selectedCategory ? styles.selected : ""}`}
+          onClick={() => handleCategoryClick(null)}
+        >
+          <span>All</span>
+        </div>
         {categories.map((category) => (
-          <CategoryChip key={category.id} category={category} onClick={() => handleCategoryClick(category)} />
+          <CategoryChip
+            key={category.id}
+            category={category}
+            isSelected={selectedCategory?.id === category.id}
+            onClick={() => handleCategoryClick(category)}
+          />
         ))}
       </div>
       <FilterButton onClick={toggleFilterOptionsShowing} />
-      {filterOptionsShowing && (<FilterOptions tags={tags} onClick={toggleTag} />)}
+      {filterOptionsShowing && (
+        <FilterOptions tags={tags} selectedTags={selectedTags} onClick={toggleTag} />
+      )}
 
       {filteredItems.map((item) => (
         <FoodCard key={item.id} name={item.name} tags={item.tags} />
