@@ -1,3 +1,4 @@
+import BottomNav from "@/components/BottomNav";
 import styles from "./grocery-list.module.css";
 
 export default function GroceryListPage() {
@@ -5,6 +6,7 @@ export default function GroceryListPage() {
     <div className={styles.page}>
       <h1>Grocery List</h1>
       <p>List of foods to buy will go here.</p>
+      <BottomNav />
     </div>
   );
 }

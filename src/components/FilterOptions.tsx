@@ -16,41 +16,35 @@ export default function FilterOptions({
   onClick: (tagId: number) => void;
   onClose: () => void;
   onClearAll: () => void;
-  })
-{
+}) {
+  // Drag-to-close functionality
+  const startY = useRef(0);
+  const [dragY, setDragY] = useState(0);
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    startY.current = e.clientY;
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
 
-// Drag-to-close functionality
-const startY = useRef(0);
-const [dragY, setDragY] = useState(0);
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
 
-const handlePointerDown = (e: React.PointerEvent) => {
-  startY.current = e.clientY;
-  e.currentTarget.setPointerCapture(e.pointerId);
-}
+    const distance = e.clientY - startY.current;
 
-const handlePointerMove = (e: React.PointerEvent) => {
-  if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
+    if (distance > 0) {
+      setDragY(distance);
+    }
+  };
 
-  const distance = e.clientY - startY.current;
+  const handlePointerUp = (e: React.PointerEvent) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
 
-  if (distance > 0) {
-    setDragY(distance);
-  }
-}
-
-const handlePointerUp = (e: React.PointerEvent) => {
-  e.currentTarget.releasePointerCapture(e.pointerId);
-
-  if (dragY > 100) {
-    onClose();
-  } else {
-    setDragY(0);
-  }
-}
-
-
-
+    if (dragY > 100) {
+      onClose();
+    } else {
+      setDragY(0);
+    }
+  };
 
   return (
     <div className={styles.overlay}>
@@ -68,8 +62,12 @@ const handlePointerUp = (e: React.PointerEvent) => {
         </div>
 
         <h2 className={styles.title}>Filter your options</h2>
-        <button type="button" className={styles.clearAll} onClick={()=>onClearAll()}>
-          Clear all
+        <button
+          type="button"
+          className={styles.clearAll}
+          onClick={() => onClearAll()}
+        >
+          Clear All
         </button>
         <div className={styles.filterOptions}>
           {tags.map((tag) => (

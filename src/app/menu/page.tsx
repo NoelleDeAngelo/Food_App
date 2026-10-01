@@ -1,4 +1,5 @@
 import styles from "./menu.module.css";
+import BottomNav from "@/components/BottomNav";
 import { getAvailableUserItems } from "@/lib/db/items";
 import { getUserCategories } from "@/lib/db/categories";
 import { getUserTags } from "@/lib/db/tags";
@@ -14,6 +15,7 @@ export default async function Menu() {
       <h1>Menu</h1>
       <p className={styles.subheading}>What are you in the mood for?</p>
       <FilterableFoodList categories={categories} items={items} tags={tags} />
+      <BottomNav />
     </div>
   );
 }

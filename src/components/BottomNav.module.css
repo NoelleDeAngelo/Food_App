@@ -1,0 +1,44 @@
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: 5px;
+  box-shadow: var(--shadow-soft);
+  padding-bottom: env(safe-area-inset-bottom);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  align-items: center;
+  justify-items: center;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navIcon {
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.navText {
+  font-size: 0.875rem;
+  margin-top: 5px;
+  text-align: center;
+  line-height: 1.1;
+  color: var(--text-secondary);
+}
+
+.AddItem {
+  font-size: 5rem;
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  justify-self: center;
+  color: var(--sage-dark);
+}
