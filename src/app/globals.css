@@ -16,6 +16,7 @@
   --yellow: #fde9b7;
   --lavender: #e9e1f7;
   --blush: #fadbd8;
+  --blue: #dce8ed;
 
   --ink: #1f2937;
   --text-secondary: #687067;
@@ -35,7 +36,8 @@
   --space-xl: 32px;
 
   /* Layout */
-  --page-padding: 6vh 7vw;
+  --page-padding: 6vh 7vw 2vw;
+  --bottom-nav-height: 90px;
 
   /* Effects */
   --shadow-soft: 0 2px 10px rgb(31 41 55 / 0.06);

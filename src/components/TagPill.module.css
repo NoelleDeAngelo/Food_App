@@ -13,3 +13,24 @@
   line-height: 1.2;
   white-space: nowrap;
 }
+
+.sage {
+  background-color: var(--sage-light);
+  color: var(--ink);
+}
+.yellow {
+  background-color: var(--yellow);
+  color: var(--ink);
+}
+.lavender {
+  background-color: var(--lavender);
+  color: var(--ink);
+}
+.blush {
+  background-color: var(--blush);
+  color: var(--ink);
+}
+.blue {
+  background-color: var(--blue);
+  color: var(--ink);
+}

@@ -4,6 +4,7 @@
   margin: var(--page-padding);
   min-height: 100dvh;
   text-align: left;
+  padding-bottom: var(--bottom-nav-height);
 }
 
 .subheading {

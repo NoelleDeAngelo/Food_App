@@ -43,8 +43,8 @@
   min-height: 40px;
   padding: 8px 14px;
 
-  background-color: var(--surface);
-  color: var(--ink);
+  background-color: var(--sage-light);
+  color: var(--sage-dark);
 
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
