@@ -1,6 +1,5 @@
 import prisma from "@/lib/db/prisma";
 
-
 export async function getAllUserItems(userId: number) {
   const items = await prisma.item.findMany({
     where: {
@@ -26,4 +25,16 @@ export async function getAvailableUserItems(userId: number) {
     },
   });
   return items;
+}
+export async function getUsersItemById(itemId: number, userId: number) {
+  return prisma.item.findUnique({
+    where: {
+      id: itemId,
+      userId,
+    },
+    include: {
+      tags: true,
+      categories: true,
+    },
+  });
 }

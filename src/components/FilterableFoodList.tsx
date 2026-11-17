@@ -1,14 +1,16 @@
 "use client";
 
-import type { ItemWithTagsAndCategories, CategorySummary, TagSummary } from "@/types";
+import type {
+  ItemWithTagsAndCategories,
+  CategorySummary,
+  TagSummary,
+} from "@/types";
 import CategoryChip from "./CategoryChip";
 import FoodCard from "./FoodCard";
 import styles from "./FilterableFoodList.module.css";
 import { useState } from "react";
 import FilterOptions from "./FilterOptions";
 import { LiaSlidersHSolid } from "react-icons/lia";
-
-
 
 export default function FilterableFoodList({
   categories,
@@ -18,9 +20,9 @@ export default function FilterableFoodList({
   categories: CategorySummary[];
   items: ItemWithTagsAndCategories[];
   tags: TagSummary[];
-  }) {
-
-  const [selectedCategory, setSelectedCategory] = useState<CategorySummary | null>(null);
+}) {
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategorySummary | null>(null);
 
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
@@ -29,7 +31,9 @@ export default function FilterableFoodList({
   const filteredItems = items.filter((item) => {
     let list;
     if (!selectedCategory) {
-      list = selectedTags.every((tagId) => item.tags.some((tag) => tag.id === tagId));
+      list = selectedTags.every((tagId) =>
+        item.tags.some((tag) => tag.id === tagId),
+      );
     } else {
       list =
         item.categories.some((cat) => cat.id === selectedCategory.id) &&
@@ -38,9 +42,8 @@ export default function FilterableFoodList({
         );
     }
 
-    return list
+    return list;
   });
-
 
   const toggleFilterOptionsShowing = () => {
     setFilterOptionsShowing((prev) => !prev);
@@ -60,17 +63,13 @@ export default function FilterableFoodList({
     setSelectedTags([]);
   };
 
-
-
-  const handleCategoryClick = (category: CategorySummary| null) => {
+  const handleCategoryClick = (category: CategorySummary | null) => {
     if (category === null) {
       setSelectedCategory(null);
     } else {
       setSelectedCategory(category);
     }
   };
-
-
 
   return (
     <div className={styles.filterableFoodList}>
@@ -90,7 +89,10 @@ export default function FilterableFoodList({
           />
         ))}
       </div>
-      <button className={styles.filterButton} onClick={toggleFilterOptionsShowing}>
+      <button
+        className={styles.filterButton}
+        onClick={toggleFilterOptionsShowing}
+      >
         <LiaSlidersHSolid /> Filter
       </button>
       {filterOptionsShowing && (
@@ -105,11 +107,13 @@ export default function FilterableFoodList({
       )}
 
       {filteredItems.map((item) => (
-        <FoodCard key={item.id} name={item.name} tags={item.tags} />
+        <FoodCard
+          key={item.id}
+          name={item.name}
+          tags={item.tags}
+          id={item.id}
+        />
       ))}
     </div>
   );
 }
-
-
-
