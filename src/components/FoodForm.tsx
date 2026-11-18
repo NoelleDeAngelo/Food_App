@@ -1,13 +1,15 @@
 "use client";
 import {
   CategorySummary,
-  ItemWithTagsAndCategories,
   TagSummary,
+  ItemWithTagsAndCategories,
+  FoodInput,
 } from "@/types";
 import styles from "./FoodForm.module.css";
 import { useState } from "react";
+import { updateFood } from "@/app/item/actions";
 
-// TODO: Connect form submission to a database update.
+// TODO: implement a way to add new tags
 
 export default function FoodForm({
   item,
@@ -56,9 +58,52 @@ export default function FoodForm({
     });
   };
 
+  //_____Toggle logic_____
+  const [isAvailable, setIsAvailable] = useState(item?.isAvailable);
+  const [isOnGroceryList, setIsOnGroceryList] = useState(item?.isOnGroceryList);
+  const handleAvailabilityToggle = () => {
+    setFoodChanged(true);
+    setIsAvailable((prev) => !prev);
+  };
+
+  const handleGroceryListToggle = () => {
+    setFoodChanged(true);
+    setIsOnGroceryList((prev) => !prev);
+  };
+
+  //_____Form submission logic_____
+  const [isSaving, setIsSaving] = useState(false);
+
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+
+    const food: FoodInput = {
+      name: String(formData.get("name") ?? ""),
+      categoryIds: [...selectedCategories],
+      tagIds: [...selectedTags],
+      isAvailable: isAvailable,
+      isOnGroceryList: isOnGroceryList,
+    };
+
+    setIsSaving(true);
+
+    try {
+      await updateFood(food, item.id);
+      setFoodChanged(false);
+      console.log("Food updated successfully");
+    } catch (error) {
+      console.error("Error updating food:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  //_____ Render _____
   return (
     <div className={styles.foodForm}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label className={styles.label} htmlFor="name">
           Food Name
         </label>
@@ -68,6 +113,7 @@ export default function FoodForm({
           type="text"
           defaultValue={item.name}
           required
+          onChange={() => setFoodChanged(true)}
         />
 
         {/*_____ Categories _____ */}
@@ -136,7 +182,8 @@ export default function FoodForm({
               type="checkbox"
               name="isAvailable"
               className={styles.toggle}
-              defaultChecked={item?.isAvailable ?? true}
+              checked={isAvailable}
+              onChange={handleAvailabilityToggle}
             />
           </label>
 
@@ -151,14 +198,15 @@ export default function FoodForm({
               type="checkbox"
               name="isOnGroceryList"
               className={styles.toggle}
-              defaultChecked={item?.isOnGroceryList ?? false}
+              checked={isOnGroceryList}
+              onChange={handleGroceryListToggle}
             />
           </label>
         </div>
         {/* _____ Save Button _____ */}
         <button
           className={styles.saveButton}
-          disabled={!foodChanged}
+          disabled={!foodChanged || isSaving}
           type="submit"
         >
           Save Changes

@@ -4,7 +4,18 @@ export type TagSummary = Pick<Tag, "id" | "name">;
 
 export type CategorySummary = Pick<Category, "id" | "name">;
 
-export type ItemWithTagsAndCategories = Pick<Item, "id" | "name"> & {
+export type ItemWithTagsAndCategories = Pick<
+  Item,
+  "id" | "name" | "isAvailable" | "isOnGroceryList"
+> & {
   tags: TagSummary[];
   categories: CategorySummary[];
+};
+
+export type FoodInput = Pick<
+  Item,
+  "name" | "isAvailable" | "isOnGroceryList"
+> & {
+  categoryIds: number[];
+  tagIds: number[];
 };
