@@ -11,7 +11,7 @@ export default async function Item() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Edit Food</h1>
+      <h1 className={styles.title}>Add Food</h1>
       <FoodForm
         createNewFood={true}
         allCategories={categories}
