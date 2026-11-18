@@ -7,19 +7,24 @@ import {
 } from "@/types";
 import styles from "./FoodForm.module.css";
 import { useState } from "react";
-import { updateFood } from "@/app/item/actions";
+import { updateFood, createFood } from "@/app/item/actions";
+import { useRouter } from "next/navigation";
 
 // TODO: implement a way to add new tags
 
 export default function FoodForm({
+  createNewFood,
   item,
   allCategories,
   allTags,
 }: {
-  item: ItemWithTagsAndCategories;
+  createNewFood?: boolean;
+  item?: ItemWithTagsAndCategories;
   allCategories: CategorySummary[];
   allTags: TagSummary[];
-}) {
+  }) {
+
+  const router = useRouter();
   const [foodChanged, setFoodChanged] = useState(false);
 
   // _____Category logic_____
@@ -59,8 +64,10 @@ export default function FoodForm({
   };
 
   //_____Toggle logic_____
-  const [isAvailable, setIsAvailable] = useState(item?.isAvailable);
-  const [isOnGroceryList, setIsOnGroceryList] = useState(item?.isOnGroceryList);
+  const [isAvailable, setIsAvailable] = useState(item?.isAvailable ?? true);
+  const [isOnGroceryList, setIsOnGroceryList] = useState(
+    item?.isOnGroceryList ?? false,
+  );
   const handleAvailabilityToggle = () => {
     setFoodChanged(true);
     setIsAvailable((prev) => !prev);
@@ -89,15 +96,25 @@ export default function FoodForm({
 
     setIsSaving(true);
 
-    try {
+try {
+    if (createNewFood) {
+      await createFood(food);
+    } else {
+      if (!item) {
+        throw new Error("Cannot update food without an item");
+      }
+
       await updateFood(food, item.id);
-      setFoodChanged(false);
-      console.log("Food updated successfully");
-    } catch (error) {
-      console.error("Error updating food:", error);
-    } finally {
-      setIsSaving(false);
     }
+
+    setFoodChanged(false);
+  console.log("Food saved successfully");
+  router.back();
+  } catch (error) {
+    console.error("Error saving food:", error);
+  } finally {
+    setIsSaving(false);
+  }
   }
 
   //_____ Render _____
@@ -111,7 +128,7 @@ export default function FoodForm({
           id="name"
           name="name"
           type="text"
-          defaultValue={item.name}
+          defaultValue={item?.name ?? ""}
           required
           onChange={() => setFoodChanged(true)}
         />

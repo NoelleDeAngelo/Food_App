@@ -26,7 +26,12 @@ export default async function Item({
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>Edit Food</h1>
-      <FoodForm item={item} allCategories={categories} allTags={tags} />
+      <FoodForm
+        createNewFood={false}
+        item={item}
+        allCategories={categories}
+        allTags={tags}
+      />
       <BottomNav />
     </div>
   );

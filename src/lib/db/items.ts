@@ -69,3 +69,33 @@ export async function updateItem(
 
   return updatedItem;
 }
+
+export async function createItem(
+  userId: number,
+  name: string,
+  isAvailable: boolean,
+  isOnGroceryList: boolean,
+  categoryIds: number[],
+  tagIds: number[],
+) {
+  const newItem = await prisma.item.create({
+    data: {
+      name,
+      isAvailable,
+      isOnGroceryList,
+      userId,
+      categories: {
+        connect: categoryIds.map((id) => ({ id })),
+      },
+      tags: {
+        connect: tagIds.map((id) => ({ id })),
+      },
+    },
+    include: {
+      tags: true,
+      categories: true,
+    },
+  });
+
+  return newItem;
+}
