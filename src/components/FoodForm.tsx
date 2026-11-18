@@ -22,8 +22,7 @@ export default function FoodForm({
   item?: ItemWithTagsAndCategories;
   allCategories: CategorySummary[];
   allTags: TagSummary[];
-  }) {
-
+}) {
   const router = useRouter();
   const [foodChanged, setFoodChanged] = useState(false);
 
@@ -96,25 +95,25 @@ export default function FoodForm({
 
     setIsSaving(true);
 
-try {
-    if (createNewFood) {
-      await createFood(food);
-    } else {
-      if (!item) {
-        throw new Error("Cannot update food without an item");
+    try {
+      if (createNewFood) {
+        await createFood(food);
+      } else {
+        if (!item) {
+          throw new Error("Cannot update food without an item");
+        }
+
+        await updateFood(food, item.id);
       }
 
-      await updateFood(food, item.id);
+      setFoodChanged(false);
+      console.log("Food saved successfully");
+      router.back();
+    } catch (error) {
+      console.error("Error saving food:", error);
+    } finally {
+      setIsSaving(false);
     }
-
-    setFoodChanged(false);
-  console.log("Food saved successfully");
-  router.back();
-  } catch (error) {
-    console.error("Error saving food:", error);
-  } finally {
-    setIsSaving(false);
-  }
   }
 
   //_____ Render _____
@@ -226,7 +225,7 @@ try {
           disabled={!foodChanged || isSaving}
           type="submit"
         >
-          Save Changes
+          {createNewFood ? "Add Food" : "Save Changes"}
         </button>
       </form>
     </div>
