@@ -7,15 +7,21 @@ type FoodCardProps = {
   name: string;
   tags: TagSummary[];
   id: number;
+  showTags?: boolean;
 };
 
-export default function FoodCard({ name, tags, id }: FoodCardProps) {
+export default function FoodCard({
+  name,
+  tags,
+  id,
+  showTags = false,
+}: FoodCardProps) {
   return (
     <Link href={`/item/${id}`}>
       <div className={styles.foodCard}>
         <h2 className={styles.name}>{name}</h2>
         <div className={styles.tags}>
-          {tags.map((tag) => (
+          {showTags && tags.map((tag) => (
             <TagPill key={tag.id} tag={tag} />
           ))}
         </div>

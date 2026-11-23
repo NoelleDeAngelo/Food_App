@@ -11,10 +11,15 @@ export default async function Menu() {
   const tags = await getUserTags(1);
 
   return (
-    <div className={styles.page}>
+    <div className="app_page">
       <h1>Menu</h1>
-      <p className={styles.subheading}>What are you in the mood for?</p>
-      <FilterableFoodList categories={categories} items={items} tags={tags} />
+      <p className="subheading">What are you in the mood for?</p>
+      <FilterableFoodList
+        categories={categories}
+        items={items}
+        tags={tags}
+        showTags={true}
+      />
       <BottomNav />
     </div>
   );

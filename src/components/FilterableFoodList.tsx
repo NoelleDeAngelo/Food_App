@@ -16,14 +16,19 @@ export default function FilterableFoodList({
   categories,
   items,
   tags,
+  showTags,
+  hasSearch,
 }: {
   categories: CategorySummary[];
   items: ItemWithTagsAndCategories[];
   tags: TagSummary[];
+  showTags?: boolean;
+  hasSearch?: boolean;
 }) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategorySummary | null>(null);
 
+  //____filter logic_____
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   const [filterOptionsShowing, setFilterOptionsShowing] = useState(false);
@@ -71,8 +76,31 @@ export default function FilterableFoodList({
     }
   };
 
+  //____search logic_____
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredItemsBySearch = filteredItems.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.trim().toLowerCase()),
+  );
+
+  //_____rendering_____
   return (
     <div className={styles.filterableFoodList}>
+      <div className={styles.searchBar}>
+        {hasSearch && (
+          <input
+            type="text"
+            placeholder="Search for a food..."
+            className={styles.searchInput}
+            onChange={handleSearchChange}
+            value={searchQuery}
+          />
+        )}
+      </div>
       <div className={styles.categories}>
         <div
           className={`${styles.chip} ${!selectedCategory ? styles.selected : ""}`}
@@ -99,19 +127,20 @@ export default function FilterableFoodList({
         <FilterOptions
           tags={tags}
           selectedTags={selectedTags}
-          optionsNumber={filteredItems.length}
+          optionsNumber={filteredItemsBySearch.length}
           onClick={toggleTag}
           onClose={toggleFilterOptionsShowing}
           onClearAll={clearAllTags}
         />
       )}
 
-      {filteredItems.map((item) => (
+      {filteredItemsBySearch.map((item) => (
         <FoodCard
           key={item.id}
           name={item.name}
           tags={item.tags}
           id={item.id}
+          showTags={showTags}
         />
       ))}
     </div>
