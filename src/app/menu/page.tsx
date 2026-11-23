@@ -19,6 +19,7 @@ export default async function Menu() {
         items={items}
         tags={tags}
         showTags={true}
+        hasSearch={false}
       />
       <BottomNav />
     </div>
