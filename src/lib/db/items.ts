@@ -26,6 +26,21 @@ export async function getAvailableUserItems(userId: number) {
   });
   return items;
 }
+
+export async function getGroceryListUserItems(userId: number) {
+  const items = await prisma.item.findMany({
+    where: {
+      userId: userId,
+      isOnGroceryList: true,
+    },
+    include: {
+      tags: true,
+      categories: true,
+    },
+  });
+  return items;
+}
+
 export async function getUsersItemById(itemId: number, userId: number) {
   return prisma.item.findUnique({
     where: {
