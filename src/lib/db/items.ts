@@ -1,6 +1,6 @@
 import prisma from "@/lib/db/prisma";
 
-export async function getAllUserItems(userId: number) {
+export async function getAllUserItems(userId: string) {
   const items = await prisma.item.findMany({
     where: {
       userId: userId,
@@ -13,7 +13,7 @@ export async function getAllUserItems(userId: number) {
   return items;
 }
 
-export async function getAvailableUserItems(userId: number) {
+export async function getAvailableUserItems(userId: string) {
   const items = await prisma.item.findMany({
     where: {
       userId: userId,
@@ -27,7 +27,7 @@ export async function getAvailableUserItems(userId: number) {
   return items;
 }
 
-export async function getGroceryListUserItems(userId: number) {
+export async function getGroceryListUserItems(userId: string) {
   const items = await prisma.item.findMany({
     where: {
       userId: userId,
@@ -41,7 +41,7 @@ export async function getGroceryListUserItems(userId: number) {
   return items;
 }
 
-export async function getUsersItemById(itemId: number, userId: number) {
+export async function getUsersItemById(itemId: number, userId: string) {
   return prisma.item.findUnique({
     where: {
       id: itemId,
@@ -55,7 +55,7 @@ export async function getUsersItemById(itemId: number, userId: number) {
 }
 
 export async function updateItem(
-  userId: number,
+  userId: string,
   itemId: number,
   name: string,
   isAvailable: boolean,
@@ -86,7 +86,7 @@ export async function updateItem(
 }
 
 export async function createItem(
-  userId: number,
+  userId: string,
   name: string,
   isAvailable: boolean,
   isOnGroceryList: boolean,

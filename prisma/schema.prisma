@@ -1,3 +1,4 @@
+
 datasource db {
   provider = "postgresql"
 }
@@ -8,13 +9,22 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id
   name      String
   createdAt DateTime @default(now())
 
-  items Item[]
-  tags Tag[]
-  categories Category[]
+  items         Item[]
+  tags          Tag[]
+  categories    Category[]
+  email         String
+  emailVerified Boolean    @default(false)
+  image         String?
+  updatedAt     DateTime   @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
 }
 
 model Item {
@@ -22,11 +32,11 @@ model Item {
   name            String
   isAvailable     Boolean  @default(true)
   isOnGroceryList Boolean  @default(false)
-  userId          Int
+  userId          String
   user            User     @relation(fields: [userId], references: [id])
   createdAt       DateTime @default(now())
 
-  tags Tag[]
+  tags       Tag[]
   categories Category[]
 
   @@unique([userId, name])
@@ -35,7 +45,7 @@ model Item {
 model Tag {
   id        Int      @id @default(autoincrement())
   name      String
-  userId    Int
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 
@@ -47,11 +57,59 @@ model Tag {
 model Category {
   id        Int      @id @default(autoincrement())
   name      String
-  userId    Int
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
 
   items Item[]
 
   @@unique([userId, name])
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
